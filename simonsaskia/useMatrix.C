@@ -1,0 +1,410 @@
+#include "TMatrixD.h"
+#include "TMath.h"
+#include "TRandom3.h"
+#include <iostream>
+using namespace std;
+
+void useMatrix(){
+gStyle->SetOptStat(1);
+gStyle->SetOptFit(1);
+  //Filling a matrix
+
+  TMatrixD matrix(4,4);
+  matrix(0,0)=0.631714;
+  matrix(0,1)=0.0000105954;
+  matrix(0,2)=0.00106042;
+  matrix(0,3)=0;
+  matrix(1,0)=0.000692949;
+  matrix(1,1)=0.956495;
+  matrix(1,2)=0.0111218;
+  matrix(1,3)=0.0000202916;
+  matrix(2,0)=0.00553293;
+  matrix(2,1)=0.0427734;
+  matrix(2,2)=0.809289;
+  matrix(2,3)=0.000030437;
+  matrix(3,0)=0.0000639645;
+  matrix(3,1)=0;
+  matrix(3,2)=0.00686747;
+  matrix(3,3)=0.989702;
+  cout<<"Matrix" << endl;
+  matrix.Print();
+  
+
+
+  
+  float Numbers[4]={93802,94381,79214,98563};
+ 
+  TMatrixD smatrix(4,4);
+  for(unsigned int i=0;i<4;i++){
+	  for(unsigned int j=0;j<4;j++){
+	  	cout << matrix(i,j) << endl;
+	  	smatrix(i,j)=sqrt(matrix(i,j)*(1+matrix(i,j))/Numbers[i]);
+	  }
+  }
+  smatrix.Print();
+
+    //Inverting the matrix 
+  TMatrixD Inverse(4,4);
+  Inverse = matrix;
+  Inverse.Invert();
+  
+  TMatrixD invsmatrix(4,4);
+  invsmatrix=smatrix;
+  invsmatrix.Invert();
+  
+  cout << "Blaaaaa" << endl;
+  matrix.Print();
+  Inverse.Print();
+  
+  int ntag=50;
+  float randMat[50][4][4];
+  TRandom3 r=new TRandom3::TRandom3();
+  TMatrixD newMatrix(4,4);
+  TMatrixD invMatrix(4,4);
+
+	for(unsigned int i=0;i<ntag;i++){
+		for(unsigned int j=0;j<4;j++){
+			for(unsigned int k=0;k<4;k++){
+				newMatrix(j,k)=r.Gaus(matrix(j,k),smatrix(j,k));
+			}
+		}
+		invMatrix=newMatrix;
+		invMatrix.Invert();
+		//cout << "newMatrix" << endl;
+		//newMatrix.Print();
+		//invMatrix.Print();
+		for(unsigned int j=0;j<4;j++){
+			for(unsigned int k=0;k<4;k++){
+				randMat[i][j][k]=invMatrix(j,k);
+			}
+		}
+	}
+	TMatrixD sInverse(4,4);
+	float sum;
+	for(unsigned int j=0;j<4;j++){
+		for(unsigned int k=0;k<4;k++){
+			sum=0;
+			for(unsigned int i=0;i<ntag;i++){
+				sum+=pow(randMat[i][j][k]-Inverse(j,k),2);
+			}
+			sInverse(j,k)=sqrt(1./ntag*sum);
+		}
+	}
+
+  cout<<"Inverse"<< endl;
+  Inverse.Print();
+  sInverse.Print();
+
+	TMatrixD E1(7,1);
+	TMatrixD E2(7,1);
+	TMatrixD E3(7,1);
+	TMatrixD E4(7,1);
+	TMatrixD E5(7,1);
+	TMatrixD E6(7,1);
+	TMatrixD E7(7,1);
+	E1(0,0)=1.;
+	E1(1,0)=0.;
+	E1(2,0)=0.;
+	E1(3,0)=0.;
+	E1(4,0)=0.;
+	E1(5,0)=0.;
+	E1(6,0)=0.;
+	E2(0,0)=0.;
+	E2(1,0)=1.;
+	E2(2,0)=0.;
+	E2(3,0)=0.;
+	E2(4,0)=0.;
+	E2(5,0)=0.;
+	E2(6,0)=0.;
+	E3(0,0)=0.;
+	E3(1,0)=0.;
+	E3(2,0)=1.;
+	E3(3,0)=0.;
+	E3(4,0)=0.;
+	E3(5,0)=0.;
+	E3(6,0)=0.;
+	E4(0,0)=0.;
+	E4(1,0)=0.;
+	E4(2,0)=0.;
+	E4(3,0)=1.;
+	E4(4,0)=0.;
+	E4(5,0)=0.;
+	E4(6,0)=0.;
+	E5(0,0)=0.;
+	E5(1,0)=0.;
+	E5(2,0)=0.;
+	E5(3,0)=0.;
+	E5(4,0)=1.;
+	E5(5,0)=0.;
+	E5(6,0)=0.;
+	E6(0,0)=0.;
+	E6(1,0)=0.;
+	E6(2,0)=0.;
+	E6(3,0)=0.;
+	E6(4,0)=0.;
+	E6(5,0)=1.;
+	E6(6,0)=0.;
+	E7(0,0)=0.;
+	E7(1,0)=0.;
+	E7(2,0)=0.;
+	E7(3,0)=0.;
+	E7(4,0)=0.;
+	E7(5,0)=0.;
+	E7(6,0)=1.;
+
+	float e_vals[7] = {81,236,256,1687,330,119,144};
+	float m_vals[7] = {112,306,415,3062,602,290,315};
+	float t_vals[7] = {100,244,322,2282,434,256,251};
+	float q_vals[7] = {2484,6619,8738,66577,12938,6216,6956};
+
+  //Having a vector
+  TMatrixD N(4,7);
+  for(unsigned int i=0;i<7;i++){
+		N(0,i)=e_vals[i];
+		N(1,i)=m_vals[i];
+		N(2,i)=t_vals[i];
+		N(3,i)=q_vals[i];
+	}
+	
+  TMatrixD sN(4,7);
+  TMatrixD vec(4,1);
+  TMatrixD vec1(4,1);
+  TMatrixD vec2(4,1);
+  TMatrixD Nvec(4,1);
+  TMatrixD sNc(4,1);
+  for(unsigned int i=0;i<7;i++){
+  	for(unsigned int j=0;j<4;j++){
+			Nvec(j,0)=N(j,i);
+		}
+  	sNc(0,0)=sqrt(e_vals[i]);
+		sNc(1,0)=sqrt(m_vals[i]);
+		sNc(2,0)=sqrt(t_vals[i]);
+		sNc(3,0)=sqrt(q_vals[i]);
+  	//vec=sqrt(pow(sInverse*Nvec,2)+pow(Inverse*sNc,2));
+  	vec1=sInverse*Nvec;
+  	vec1=Inverse*sNc;
+		sN(0,i)=sqrt(pow(vec1(0,0),2)+pow(vec2(0,0),2));
+		sN(1,i)=sqrt(pow(vec1(1,0),2)+pow(vec2(1,0),2));
+		sN(2,i)=sqrt(pow(vec1(2,0),2)+pow(vec2(2,0),2));
+		sN(3,i)=sqrt(pow(vec1(3,0),2)+pow(vec2(3,0),2));
+		cout<<vec1(0,0)<<endl;
+		vec1.Print();
+		//vec.Print();
+		//for(unsigned int j=0;j<4;j++){
+		//	sN(j,i)=vec(j,0);
+		//}
+	}
+	cout << "N"  <<endl;
+	N.Print();
+	cout << "sN" <<endl;
+	sN.Print();
+	
+	float L[7]={464,668,487,2247,536,451,710};
+	float sL[7]={4,6,4,16,5,4,6};
+	float corr_had[7]={2.,4.3,7.7,10.8,4.7,-0.2,-1.6};
+	float corr_lep[7]={0.09,0.20,0.36,0.52,0.22,-0.01,-0.08};
+	
+	Double_t Pi = TMath::Pi();
+	
+  TMatrixD corr(4,7);
+  for(unsigned int i=0;i<7;i++){
+		corr(0,i)=corr_lep[i];
+		corr(1,i)=corr_lep[i];
+		corr(2,i)=corr_lep[i];
+		corr(3,i)=corr_had[i];
+	}
+  //Multiply the both
+
+  TMatrixD result1(4,1);
+  TMatrixD result2(4,1);
+  TMatrixD result3(4,1);
+  TMatrixD result4(4,1);
+  TMatrixD result5(4,1);
+  TMatrixD result6(4,1);
+  TMatrixD result7(4,1);
+  TMatrixD Nt1(4,1);
+  TMatrixD Nt2(4,1);
+  TMatrixD Nt3(4,1);
+  TMatrixD Nt4(4,1);
+  TMatrixD Nt5(4,1);
+  TMatrixD Nt6(4,1);
+  TMatrixD Nt7(4,1);
+  TMatrixD sresult1(4,1);
+  TMatrixD sresult2(4,1);
+  TMatrixD sresult3(4,1);
+  TMatrixD sresult4(4,1);
+  TMatrixD sresult5(4,1);
+  TMatrixD sresult6(4,1);
+  TMatrixD sresult7(4,1);
+  Nt1=Inverse * (N*E1);
+  Nt2=Inverse * (N*E2);
+  Nt3=Inverse * (N*E3);
+  Nt4=Inverse * (N*E4);
+  Nt5=Inverse * (N*E5);
+  Nt6=Inverse * (N*E6);
+  Nt7=Inverse * (N*E7);
+//  sresult1(0,0)=Nt1(0,0)*(1/L[0]*sqrt((pow(Inverse(0,0)*sN(0,0),2)+pow(Inverse(0,1)*sN(1,0),2)+pow(Inverse(0,2)*sN(2,0),2)+pow(Inverse(0,3)*sN(3,0),2))/pow(result1(0,0),2)+pow(sL[0]/L[0],2)));
+//  sresult1(1,0)=Nt1(1,0)*(1/L[0]*sqrt((pow(Inverse(1,0)*sN(0,0),2)+pow(Inverse(1,1)*sN(1,0),2)+pow(Inverse(1,2)*sN(2,0),2)+pow(Inverse(1,3)*sN(3,0),2))/pow(result1(1,0),2)+pow(sL[0]/L[0],2)));
+//  sresult1(2,0)=Nt1(2,0)*(1/L[0]*sqrt((pow(Inverse(2,0)*sN(0,0),2)+pow(Inverse(2,1)*sN(1,0),2)+pow(Inverse(2,2)*sN(2,0),2)+pow(Inverse(2,3)*sN(3,0),2))/pow(result1(2,0),2)+pow(sL[0]/L[0],2)));
+//  sresult1(3,0)=Nt1(3,0)*(1/L[0]*sqrt((pow(Inverse(3,0)*sN(0,0),2)+pow(Inverse(3,1)*sN(1,0),2)+pow(Inverse(3,2)*sN(2,0),2)+pow(Inverse(3,3)*sN(3,0),2))/pow(result1(3,0),2)+pow(sL[0]/L[0],2)));
+//  sresult2(0,0)=Nt2(0,0)*(1/L[1]*sqrt((pow(Inverse(0,0)*sN(0,1),2)+pow(Inverse(0,1)*sN(1,1),2)+pow(Inverse(0,2)*sN(2,1),2)+pow(Inverse(0,3)*sN(3,1),2))/pow(result2(0,0),2)+pow(sL[1]/L[1],2)));
+//  sresult2(1,0)=Nt2(1,0)*(1/L[1]*sqrt((pow(Inverse(1,0)*sN(0,1),2)+pow(Inverse(1,1)*sN(1,1),2)+pow(Inverse(1,2)*sN(2,1),2)+pow(Inverse(1,3)*sN(3,1),2))/pow(result2(1,0),2)+pow(sL[1]/L[1],2)));
+//  sresult2(2,0)=Nt2(2,0)*(1/L[1]*sqrt((pow(Inverse(2,0)*sN(0,1),2)+pow(Inverse(2,1)*sN(1,1),2)+pow(Inverse(2,2)*sN(2,1),2)+pow(Inverse(2,3)*sN(3,1),2))/pow(result2(2,0),2)+pow(sL[1]/L[1],2)));
+//  sresult2(3,0)=Nt2(3,0)*(1/L[1]*sqrt((pow(Inverse(3,0)*sN(0,1),2)+pow(Inverse(3,1)*sN(1,1),2)+pow(Inverse(3,2)*sN(2,1),2)+pow(Inverse(3,3)*sN(3,1),2))/pow(result2(3,0),2)+pow(sL[1]/L[1],2)));
+//  sresult3(0,0)=Nt3(0,0)*(1/L[2]*sqrt((pow(Inverse(0,0)*sN(0,2),2)+pow(Inverse(0,1)*sN(1,2),2)+pow(Inverse(0,2)*sN(2,2),2)+pow(Inverse(0,3)*sN(3,2),2))/pow(result3(0,0),2)+pow(sL[2]/L[2],2)));
+//  sresult3(1,0)=Nt3(1,0)*(1/L[2]*sqrt((pow(Inverse(1,0)*sN(0,2),2)+pow(Inverse(1,1)*sN(1,2),2)+pow(Inverse(1,2)*sN(2,2),2)+pow(Inverse(1,3)*sN(3,2),2))/pow(result3(1,0),2)+pow(sL[2]/L[2],2)));
+//  sresult3(2,0)=Nt3(2,0)*(1/L[2]*sqrt((pow(Inverse(2,0)*sN(0,2),2)+pow(Inverse(2,1)*sN(1,2),2)+pow(Inverse(2,2)*sN(2,2),2)+pow(Inverse(2,3)*sN(3,2),2))/pow(result3(2,0),2)+pow(sL[2]/L[2],2)));
+//  sresult3(3,0)=Nt3(3,0)*(1/L[2]*sqrt((pow(Inverse(3,0)*sN(0,2),2)+pow(Inverse(3,1)*sN(1,2),2)+pow(Inverse(3,2)*sN(2,2),2)+pow(Inverse(3,3)*sN(3,2),2))/pow(result3(3,0),2)+pow(sL[2]/L[2],2)));
+//  sresult4(0,0)=Nt4(0,0)*(1/L[3]*sqrt((pow(Inverse(0,0)*sN(0,3),2)+pow(Inverse(0,1)*sN(1,3),2)+pow(Inverse(0,2)*sN(2,3),2)+pow(Inverse(0,3)*sN(3,3),2))/pow(result4(0,0),2)+pow(sL[3]/L[3],2)));
+//  sresult4(1,0)=Nt4(1,0)*(1/L[3]*sqrt((pow(Inverse(1,0)*sN(0,3),2)+pow(Inverse(1,1)*sN(1,3),2)+pow(Inverse(1,2)*sN(2,3),2)+pow(Inverse(1,3)*sN(3,3),2))/pow(result4(1,0),2)+pow(sL[3]/L[3],2)));
+//  sresult4(2,0)=Nt4(2,0)*(1/L[3]*sqrt((pow(Inverse(2,0)*sN(0,3),2)+pow(Inverse(2,1)*sN(1,3),2)+pow(Inverse(2,2)*sN(2,3),2)+pow(Inverse(2,3)*sN(3,3),2))/pow(result4(2,0),2)+pow(sL[3]/L[3],2)));
+//  sresult4(3,0)=Nt4(3,0)*(1/L[3]*sqrt((pow(Inverse(3,0)*sN(0,3),2)+pow(Inverse(3,1)*sN(1,3),2)+pow(Inverse(3,2)*sN(2,3),2)+pow(Inverse(3,3)*sN(3,3),2))/pow(result4(3,0),2)+pow(sL[3]/L[3],2)));
+//  sresult5(0,0)=Nt5(0,0)*(1/L[4]*sqrt((pow(Inverse(0,0)*sN(0,4),2)+pow(Inverse(0,1)*sN(1,4),2)+pow(Inverse(0,2)*sN(2,4),2)+pow(Inverse(0,3)*sN(3,4),2))/pow(result5(0,0),2)+pow(sL[4]/L[4],2)));
+//  sresult5(1,0)=Nt5(1,0)*(1/L[4]*sqrt((pow(Inverse(1,0)*sN(0,4),2)+pow(Inverse(1,1)*sN(1,4),2)+pow(Inverse(1,2)*sN(2,4),2)+pow(Inverse(1,3)*sN(3,4),2))/pow(result5(1,0),2)+pow(sL[4]/L[4],2)));
+//  sresult5(2,0)=Nt5(2,0)*(1/L[4]*sqrt((pow(Inverse(2,0)*sN(0,4),2)+pow(Inverse(2,1)*sN(1,4),2)+pow(Inverse(2,2)*sN(2,4),2)+pow(Inverse(2,3)*sN(3,4),2))/pow(result5(2,0),2)+pow(sL[4]/L[4],2)));
+//  sresult5(3,0)=Nt5(3,0)*(1/L[4]*sqrt((pow(Inverse(3,0)*sN(0,4),2)+pow(Inverse(3,1)*sN(1,4),2)+pow(Inverse(3,2)*sN(2,4),2)+pow(Inverse(3,3)*sN(3,4),2))/pow(result5(3,0),2)+pow(sL[4]/L[4],2)));
+//  sresult6(0,0)=Nt6(0,0)*(1/L[5]*sqrt((pow(Inverse(0,0)*sN(0,5),2)+pow(Inverse(0,1)*sN(1,5),2)+pow(Inverse(0,2)*sN(2,5),2)+pow(Inverse(0,3)*sN(3,5),2))/pow(result6(0,0),2)+pow(sL[5]/L[5],2)));
+//  sresult6(1,0)=Nt6(1,0)*(1/L[5]*sqrt((pow(Inverse(1,0)*sN(0,5),2)+pow(Inverse(1,1)*sN(1,5),2)+pow(Inverse(1,2)*sN(2,5),2)+pow(Inverse(1,3)*sN(3,5),2))/pow(result6(1,0),2)+pow(sL[5]/L[5],2)));
+//  sresult6(2,0)=Nt6(2,0)*(1/L[5]*sqrt((pow(Inverse(2,0)*sN(0,5),2)+pow(Inverse(2,1)*sN(1,5),2)+pow(Inverse(2,2)*sN(2,5),2)+pow(Inverse(2,3)*sN(3,5),2))/pow(result6(2,0),2)+pow(sL[5]/L[5],2)));
+//  sresult6(3,0)=Nt6(3,0)*(1/L[5]*sqrt((pow(Inverse(3,0)*sN(0,5),2)+pow(Inverse(3,1)*sN(1,5),2)+pow(Inverse(3,2)*sN(2,5),2)+pow(Inverse(3,3)*sN(3,5),2))/pow(result6(3,0),2)+pow(sL[5]/L[5],2)));
+//  sresult7(0,0)=Nt7(0,0)*(1/L[6]*sqrt((pow(Inverse(0,0)*sN(0,6),2)+pow(Inverse(0,1)*sN(1,6),2)+pow(Inverse(0,2)*sN(2,6),2)+pow(Inverse(0,3)*sN(3,6),2))/pow(result7(0,0),2)+pow(sL[6]/L[6],2)));
+//  sresult7(1,0)=Nt7(1,0)*(1/L[6]*sqrt((pow(Inverse(1,0)*sN(0,6),2)+pow(Inverse(1,1)*sN(1,6),2)+pow(Inverse(1,2)*sN(2,6),2)+pow(Inverse(1,3)*sN(3,6),2))/pow(result7(1,0),2)+pow(sL[6]/L[6],2)));
+//  sresult7(2,0)=Nt7(2,0)*(1/L[6]*sqrt((pow(Inverse(2,0)*sN(0,6),2)+pow(Inverse(2,1)*sN(1,6),2)+pow(Inverse(2,2)*sN(2,6),2)+pow(Inverse(2,3)*sN(3,6),2))/pow(result7(2,0),2)+pow(sL[6]/L[6],2)));
+//  sresult7(3,0)=Nt7(3,0)*(1/L[6]*sqrt((pow(Inverse(3,0)*sN(0,6),2)+pow(Inverse(3,1)*sN(1,6),2)+pow(Inverse(3,2)*sN(2,6),2)+pow(Inverse(3,3)*sN(3,6),2))/pow(result7(3,0),2)+pow(sL[6]/L[6],2)));
+  result1=Nt1*(1/L[0])+(corr*E1);
+  result2=Nt2*(1/L[1])+(corr*E2);
+  result3=Nt3*(1/L[2])+(corr*E3);
+  result4=Nt4*(1/L[3])+(corr*E4);
+  result5=Nt5*(1/L[4])+(corr*E5);
+  result6=Nt6*(1/L[5])+(corr*E6);
+  result7=Nt7*(1/L[6])+(corr*E7);
+  for(unsigned int i=0;i<4;i++){
+  	cout << "(sn/N)^2=" << pow(sN(i,0)/Nt1(i,0),2) << endl;
+  	sresult1(i,0)=sqrt(pow(Nt1(i,0)/L[0],2)*(pow(sN(i,0)/Nt1(i,0),2)+pow(sL[0]/L[0],2)));
+  	sresult2(i,0)=sqrt(pow(Nt2(i,0)/L[1],2)*(pow(sN(i,1)/Nt2(i,0),2)+pow(sL[1]/L[1],2)));
+  	sresult3(i,0)=sqrt(pow(Nt3(i,0)/L[2],2)*(pow(sN(i,2)/Nt3(i,0),2)+pow(sL[2]/L[2],2)));
+  	sresult4(i,0)=sqrt(pow(Nt4(i,0)/L[3],2)*(pow(sN(i,3)/Nt4(i,0),2)+pow(sL[3]/L[3],2)));
+  	sresult5(i,0)=sqrt(pow(Nt5(i,0)/L[4],2)*(pow(sN(i,4)/Nt5(i,0),2)+pow(sL[4]/L[4],2)));
+  	sresult6(i,0)=sqrt(pow(Nt6(i,0)/L[5],2)*(pow(sN(i,5)/Nt6(i,0),2)+pow(sL[5]/L[5],2)));
+  	sresult7(i,0)=sqrt(pow(Nt7(i,0)/L[6],2)*(pow(sN(i,6)/Nt7(i,0),2)+pow(sL[6]/L[6],2)));
+  }
+  cout<<"Multiplied results:"<< endl;
+  cout<<"E1:"<< endl;
+  result1.Print();
+  sresult1.Print();
+  cout<<"E2:"<< endl;
+  result2.Print();
+  sresult2.Print();
+  cout<<"E3:"<< endl;
+  result3.Print();
+  sresult3.Print();
+  cout<<"E4:"<< endl;
+  result4.Print();
+  sresult4.Print();
+  cout<<"E5:"<< endl;
+  result5.Print();
+  sresult5.Print();
+  cout<<"E6:"<< endl;
+  result6.Print();
+  sresult6.Print();
+  cout<<"E7:"<< endl;
+  result7.Print();
+  sresult7.Print();
+  
+  float sigma_e[7]={result1(0,0),result2(0,0),result3(0,0),result4(0,0),result5(0,0),result6(0,0),result7(0,0)};
+  float sigma_m[7]={result1(1,0),result2(1,0),result3(1,0),result4(1,0),result5(1,0),result6(1,0),result7(1,0)};
+  float sigma_t[7]={result1(2,0),result2(2,0),result3(2,0),result4(2,0),result5(2,0),result6(2,0),result7(2,0)};
+  float sigma_q[7]={result1(3,0),result2(3,0),result3(3,0),result4(3,0),result5(3,0),result6(3,0),result7(3,0)};
+  float ssigma_e[7]={sresult1(0,0),sresult2(0,0),sresult3(0,0),sresult4(0,0),sresult5(0,0),sresult6(0,0),sresult7(0,0)};
+  float ssigma_m[7]={sresult1(1,0),sresult2(1,0),sresult3(1,0),sresult4(1,0),sresult5(1,0),sresult6(1,0),sresult7(1,0)};
+  float ssigma_t[7]={sresult1(2,0),sresult2(2,0),sresult3(2,0),sresult4(2,0),sresult5(2,0),sresult6(2,0),sresult7(2,0)};
+  float ssigma_q[7]={sresult1(3,0),sresult2(3,0),sresult3(3,0),sresult4(3,0),sresult5(3,0),sresult6(3,0),sresult7(3,0)};
+  
+  Int_t posX[4] = {230,840,230,840};
+  Int_t posY[4] = {111,111,539,539};
+  TGraphErrors* graph_l2= new TGraphErrors(7);  
+  TGraphErrors* graph_l= new TGraphErrors(7);  
+  TGraphErrors* graph_e= new TGraphErrors(7);
+  TGraphErrors* graph_m= new TGraphErrors(7);
+  TGraphErrors* graph_t= new TGraphErrors(7);
+  TGraphErrors* graph_q= new TGraphErrors(7);
+  float E[7]={88.48,89.47,90.22,91.22,91.97,92.96,93.72};
+  for( int ipoint=0; ipoint<7; ipoint++){
+    graph_e->SetPoint(ipoint, E[ipoint], sigma_e[ipoint]);
+    graph_m->SetPoint(ipoint, E[ipoint], sigma_m[ipoint]);
+    graph_t->SetPoint(ipoint, E[ipoint], sigma_t[ipoint]);
+    graph_q->SetPoint(ipoint, E[ipoint], sigma_q[ipoint]);
+    graph_l->SetPoint(ipoint*3+0, E[ipoint], sigma_e[ipoint]);
+    graph_l->SetPoint(ipoint*3+1, E[ipoint], sigma_m[ipoint]);
+    graph_l->SetPoint(ipoint*3+2, E[ipoint], sigma_t[ipoint]);
+    graph_l2->SetPoint(ipoint*3+0, E[ipoint], sigma_e[ipoint]);
+    graph_l2->SetPoint(ipoint*3+1, E[ipoint], sigma_m[ipoint]);
+    graph_l2->SetPoint(ipoint*3+2, E[ipoint], sigma_t[ipoint]);
+    graph_e->SetPointError(ipoint,0,ssigma_e[ipoint]);
+    graph_m->SetPointError(ipoint,0,ssigma_m[ipoint]);
+    graph_t->SetPointError(ipoint,0,ssigma_t[ipoint]);
+    graph_q->SetPointError(ipoint,0,ssigma_q[ipoint]);
+    graph_l->SetPointError(ipoint*3+0,0,ssigma_e[ipoint]);
+    graph_l->SetPointError(ipoint*3+1,0,ssigma_m[ipoint]);
+    graph_l->SetPointError(ipoint*3+2,0,ssigma_t[ipoint]);
+    graph_l2->SetPointError(ipoint*3+0,0,ssigma_e[ipoint]/5.33*7.35);
+    graph_l2->SetPointError(ipoint*3+1,0,ssigma_m[ipoint]/13.71*7.35);
+    graph_l2->SetPointError(ipoint*3+2,0,ssigma_t[ipoint]/3.02*7.35);
+  }
+  TF1* fit_ll = new TF1("ll","0.3894*pow(10,6)*12*pi/pow([0],2)*pow(x,2)*pow([1],2)/(pow(pow(x,2)-pow([0],2),2)+pow(pow(x,2)*[2]/[0],2))",88,94);//12.*pi/pow([0],2)*pow(x,2)*pow([1],2)/(pow(pow(x,2)-pow([0],2),2)+pow(pow(x,2)*[2]/[0],2))*0.384*pow(10,-6)
+  fit_ll->SetParameters(91.00,0.083,2.89);
+  fit_ll->SetParNames("M_{Z}","#Gamma_{l}","#Gamma_{Z}");
+  fit_ll->SetLineColor(2);
+  TF1* fit_ll2 = new TF1("ll2","0.3894*pow(10,6)*12*pi/pow([0],2)*pow(x,2)*pow([1],2)/(pow(pow(x,2)-pow([0],2),2)+pow(pow(x,2)*[2]/[0],2))",88,94);//12.*pi/pow([0],2)*pow(x,2)*pow([1],2)/(pow(pow(x,2)-pow([0],2),2)+pow(pow(x,2)*[2]/[0],2))*0.384*pow(10,-6)
+  fit_ll2->SetParameters(91.00,0.083,2.89);
+  fit_ll2->SetParNames("M_{Z}","#Gamma_{l}","#Gamma_{Z}");
+  fit_ll2->SetLineColor(2);
+  new TCanvas("ll","Leptonen",(posX[0]+posX[1])/2,(posY[0]+posY[2])/2,600,400);
+  graph_l->Draw("A*");
+  graph_l->Fit("ll","","",88,94);
+  fit_ll->Draw("same");
+  new TCanvas("ll2","Leptonen (gewichtet)",(posX[0]+posX[1])/2,(posY[0]+posY[2])/2,600,400);
+  graph_l2->Draw("A*");
+  graph_l2->Fit("ll2","","",88,94);
+  fit_ll2->Draw("same");
+  float Mz_l=fit_ll2->GetParameter(0);
+  float Gamma_l=fit_ll2->GetParameter(1);
+  float Gamma_Z_l=fit_ll2->GetParameter(2);
+  TF1* fit_mm = new TF1("mm",TString("0.3894*pow(10,6)*12*pi/pow(")+Form("%f",Mz_l)+TString(",2)*pow(x,2)*")+Form("%f",pow(Gamma_l,2))+TString("/(pow(pow(x,2)-pow(")+Form("%f",Mz_l)+TString(",2),2)+pow(pow(x,2)*")+Form("%f",Gamma_Z_l)+TString("/")+Form("%f",Mz_l)+TString(",2))+[0]-[0]"),88,94);
+  fit_mm->SetParameter(0,1);
+  fit_mm->SetParNames("bla");
+  fit_mm->SetLineColor(2);
+  new TCanvas("mm","Myonen",posX[0],posY[0],600,400);
+  graph_m->Draw("A*");
+  graph_m->Fit("mm","","",88,94);
+  fit_mm->Draw("same");
+  //new TCanvas("fit","Elektronen",600,400);  
+  //fit_ee->Draw();
+  TF1* fit_ee = new TF1("ee",TString("0.3894*pow(10,6)*12*pi/pow(")+Form("%f",Mz_l)+TString(",2)*pow(x,2)*")+Form("%f",pow(Gamma_l,2))+TString("/(pow(pow(x,2)-pow(")+Form("%f",Mz_l)+TString(",2),2)+pow(pow(x,2)*")+Form("%f",Gamma_Z_l)+TString("/")+Form("%f",Mz_l)+TString(",2))+[0]-[0]"),88,94);
+  TF1* fit_tt = new TF1("tt",TString("0.3894*pow(10,6)*12*pi/pow(")+Form("%f",Mz_l)+TString(",2)*pow(x,2)*")+Form("%f",pow(Gamma_l,2))+TString("/(pow(pow(x,2)-pow(")+Form("%f",Mz_l)+TString(",2),2)+pow(pow(x,2)*")+Form("%f",Gamma_Z_l)+TString("/")+Form("%f",Mz_l)+TString(",2))+[0]-[0]"),88,94);
+//  TF1* fit_qq = new TF1("qq",TString("0.3894*pow(10,6)*12*pi/pow([0],2)*pow(x,2)*[1]*[1]/(pow(pow(x,2)-pow([0],2),2)+pow(pow(x,2)*[2]/[0],2))"),88,94);
+//  TF1* fit_ee = new TF1("ee",TString("0.3894*pow(10,6)*12*pi/pow([0],2)*pow(x,2)*")+Form("%f",Gamma_m,)+TString("*[1]/(pow(pow(x,2)-pow([0],2),2)+pow(pow(x,2)*[2]/[0],2))"),88,94);
+//  TF1* fit_tt = new TF1("tt",TString("0.3894*pow(10,6)*12*pi/pow([0],2)*pow(x,2)*")+Form("%f",Gamma_m,)+TString("*[1]/(pow(pow(x,2)-pow([0],2),2)+pow(pow(x,2)*[2]/[0],2))"),88,94);
+  TF1* fit_qq = new TF1("qq",TString("0.3894*pow(10,6)*12*pi/pow([0],2)*pow(x,2)*")+Form("%f",Gamma_l)+TString("*[1]/(pow(pow(x,2)-pow([0],2),2)+pow(pow(x,2)*[2]/[0],2))"),88,94);
+  fit_ee->SetParNames("M_{Z}","#Gamma_{e}","#Gamma_{Z}");
+  fit_tt->SetParNames("M_{Z}","#Gamma_{#tau}","#Gamma_{Z}");
+  fit_qq->SetParNames("M_{Z}","#Gamma_{q}","#Gamma_{Z}");
+  fit_ee->SetParameters(91.18,0.083,2.153);
+  fit_tt->SetParameters(91.14,0.083,2.72);
+  fit_qq->SetParameters(91.19,1.5,2.542);
+  fit_ee->SetLineColor(2);
+  fit_tt->SetLineColor(2);
+  fit_qq->SetLineColor(2);
+  new TCanvas("ee","Elektronen",posX[1],posY[1],600,400);
+  graph_e->Draw("A*");
+  graph_e->Fit("ee","","",88,94);
+  fit_ee->Draw("same");
+  new TCanvas("tt","Tauonen",posX[2],posY[2],600,400);
+  graph_t->Draw("A*");
+  graph_t->Fit("tt","","",88,94);
+  fit_tt->Draw("same");
+  new TCanvas("qq","Quarks",posX[3],posY[3],600,400);
+  graph_q->Draw("A*");
+  graph_q->Fit("qq","","",88,94);
+  fit_qq->Draw("same");
+}

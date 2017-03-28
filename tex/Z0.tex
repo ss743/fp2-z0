@@ -21,6 +21,11 @@
 \usepackage{tikz}
 \usepackage{icomma}
 \usepackage{revsymb}
+\usepackage{pgfplots}
+\usepackage[euler]{textgreek}
+\usepackage{fixltx2e}
+\usepackage{tikz-feynman}
+\usepackage{subfigure}
 
 \usepackage[backend=biber,backref=false,style=numeric-comp, sorting=none,block=ragged,firstinits=true]{biblatex}
 
@@ -52,7 +57,7 @@
 \cfoot{}
 \rfoot{}
 
-\title{\vspace{0cm}{\Huge Fortgeschrittenen-Praktikum II:\\ \vspace{1cm} $Z^{0}$ Resonanz}}
+\title{\vspace{0cm}{\Huge Fortgeschrittenen-Praktikum II:\\ \vspace{1cm} Z\textsuperscript0-Resonanz}}
 \author{Saskia Bondza\\Simon Stephan}
 \date{durchgeführt vom 13.03.2017 bis 17.03.2017}
 
@@ -100,7 +105,11 @@
 	\vskip 30 pt
 }
 \newcommand{\del}[2][]{\frac{\partial #1}{\partial #2}}
+\newcommand{\diff}[2][]{\frac{\mathrm d #1}{\mathrm d #2}}
 \newcommand{\code}[1]{\texttt{#1}}
+
+\newcommand{\vcenterbf}[3][white]{\textcolor{#1}{$P_q$}\textcolor{#2}{\textbf{#3}}\textcolor{#1}{$P_q$}}
+\newcommand{\vcenternode}[3][white]{\textcolor{#1}{$P_q$}\textcolor{#2}{#3}\textcolor{#1}{$P_q$}}
 
 \addbibresource{fp_refs.bib}
 

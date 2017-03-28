@@ -1,0 +1,110 @@
+#include "TFile.h"
+#include "TTree.h"
+#include "TH1F.h"
+#include "TString.h"
+#include "TMath.h"
+#include "Math/WrappedTF1.h"
+#include <iostream>
+
+void part5(int cut=1,float lim=0.8){
+  gROOT->Reset();
+  gROOT->SetStyle("Plain");
+  gStyle->SetOptStat(0);//if you want to get rid of the statistics box
+  
+  TFile* files[5];
+  files[0] = new TFile("../daten/mc/ee.root");
+  files[1] = new TFile("../daten/mc/mm.root");
+  files[2] = new TFile("../daten/mc/tt.root");
+  files[3] = new TFile("../daten/mc/qq.root");
+  files[4] = new TFile("../daten/daten/daten_4.root");
+  
+  TFile* file = files[0];
+  
+  TTree* h[5];
+  
+  float sumWithoutCut[4];
+  float sumWithCut[4];
+  
+  float sum1;
+  float sum2;
+  
+  float Br[4]={1.3994,1.3994,1.3994,29.0672};
+
+  //Make cuts and get the number of events
+
+//  files[1]->cd(); //ee ntuple
+  //without cuts
+//  TTree *hee = (TTree*)files[1]->Get("h3");
+//  float nEvents_ee_all = hee->Draw("E_ecal>>heEcal_ee_all(200,0,200)","");
+//  TH1F* heEcal_ee_all = (TH1F*) gDirectory->Get("heEcal_ee_all");
+//  cout << ("n_ee_all=") << nEvents_ee_all << endl;
+
+
+//  files[1]->cd(); //mm ntuple
+  //with cuts
+//  TString mmcuts="Ncharged<5 && Pcharged>10";
+//  TTree *hmm = (TTree*)files[1]->Get("h3");
+//  float nEvents_mm_all = hmm->Draw("E_ecal>>heEcal_mm_all(200,0,200)",mmcuts);
+//  TH1F* heEcal_mm_all = (TH1F*) gDirectory->Get("heEcal_mm_all");
+//  cout << ("n_mm_all=") << nEvents_mm_all << endl;
+  
+  int colors[5]={1,2,3,4,6};//for ee, mm, tt, qq, data
+  TString numbers[5] = {"0","1","2","3","4"};
+  TString names[5] = {"ee","mm","tt","qq","data"};
+  TString arguments[5] = {"Ncharged","E_ecal","Pcharged","E_hcal","cos_thet"};
+  TString boundaries[5] = {"(40,0,40)","(120,0,120)","(120,0,120)","(40,0,40)","(100,-1,1)"};
+
+  
+  TString argument;
+  TString bounds;
+  
+  TString cuts[] = {"","((Ncharged<5 && E_ecal>=74)||(Pcharged==0 && E_ecal>80))","Ncharged<5 && E_ecal<50 && (Pcharged>=75||Pcharged<1)","Ncharged<5 && E_ecal<74 && Pcharged<75 && Pcharged>0","Ncharged>7"};
+	TString cutnames[] = {"-","Elektronen","Myonen","Tauonen","Quarks"};
+  
+  for(unsigned int k=4; k<5;k++){
+  	argument=arguments[k];
+  	bounds=boundaries[k];
+   	new TCanvas(TString("c")+k,argument+TString(" (")+cutnames[cut]+TString(")"),860,150,800,600);
+
+  	
+  	h[k] = (TTree*)file->Get("h3");
+		h[k]->SetTitle("ee");
+		//h[k]->SetLineColor(colors[k]);
+		h[k]->Draw(TString(argument)+TString(">>")+argument+bounds,cuts[cut]);
+		
+		
+		TGraphErrors* gr = new TGraphErrors((TH1F*) gDirectory->Get(argument));
+		gr->SetLineWidth(2);
+ 		gr->SetLineColor(1);
+ 		
+ 		TF1* grfit = new TF1("grfit","[0]*(1+pow(x,2))+[1]*pow((1-x),-2)",-1,1);
+  	gr->Draw("A*");
+  	grfit->SetParameters(1,1);
+  	//grfit->Draw("same");
+  	gr->Fit("grfit","","",-0.9,0.9);
+  	grfit->SetLineColor(2);
+  	grfit->Draw("same");
+  	
+  	float A=grfit->GetParameter(0);
+  	float B=grfit->GetParameter(1);
+  	
+  	TF1* tkanal = new TF1("grfit","[0]*pow((1-x),-2)",-1,1);
+  	TF1* skanal = new TF1("grfit","[0]*(1+pow(x,2))",-1,1);
+  	tkanal->SetParameter(0,B);
+  	skanal->SetParameter(0,A);
+  	tkanal->SetLineColor(3);
+  	skanal->SetLineColor(4);
+  	tkanal->Draw("A*,same");
+  	skanal->Draw("A*,same");
+ 		
+ 		Double_t eff=skanal->Integral(-0.9,lim)/skanal->Integral(-1.,1.);
+ 		Double_t pur=skanal->Integral(-0.9,lim)/grfit->Integral(-1.,lim);
+ 		
+    cout << (TString("eff = ")) << eff << endl;
+
+    cout << (TString("pur = ")) << pur << endl;
+
+	}
+	
+
+}

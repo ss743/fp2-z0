@@ -1,0 +1,146 @@
+#include "TFile.h"
+#include "TTree.h"
+#include "TH1F.h"
+#include "TString.h"
+#include <iostream>
+
+void makeCuts2photon(char bounds[]="",char cuts[]="",float r=1.0,char name[]=""){
+  gROOT->Reset();
+  gROOT->SetStyle("Plain");
+  gStyle->SetOptStat(0);//if you want to get rid of the statistics box
+  
+  TFile* files[5];
+  files[0] = new TFile("../daten/mc/ee.root");
+  files[1] = new TFile("../daten/mc/mm.root");
+  files[2] = new TFile("../daten/mc/tt.root");
+  files[3] = new TFile("../daten/mc/qq.root");
+  files[4] = new TFile("../daten/daten/daten_4.root");
+  
+  TTree* h[5];
+  TH2F *h_Ncharged_vs_Pcharged[5];
+  
+  float sumWithoutCut[4];
+  float sumWithCut[4];
+  float eff[4];
+  float pur[4];
+  
+  float sum1;
+  float sum2;
+  
+  float Br[4]={1.3994,1.3994,1.3994,29.0672};
+
+  //Make cuts and get the number of events
+
+//  files[1]->cd(); //ee ntuple
+  //without cuts
+//  TTree *hee = (TTree*)files[1]->Get("h3");
+//  float nEvents_ee_all = hee->Draw("E_ecal>>heEcal_ee_all(200,0,200)","");
+//  TH1F* heEcal_ee_all = (TH1F*) gDirectory->Get("heEcal_ee_all");
+//  cout << ("n_ee_all=") << nEvents_ee_all << endl;
+
+
+//  files[1]->cd(); //mm ntuple
+  //with cuts
+//  TString mmcuts="Ncharged<5 && Pcharged>10";
+//  TTree *hmm = (TTree*)files[1]->Get("h3");
+//  float nEvents_mm_all = hmm->Draw("E_ecal>>heEcal_mm_all(200,0,200)",mmcuts);
+//  TH1F* heEcal_mm_all = (TH1F*) gDirectory->Get("heEcal_mm_all");
+//  cout << ("n_mm_all=") << nEvents_mm_all << endl;
+  
+  int colors[5]={1,2,3,4,5};//for ee, mm, tt, qq, data
+  TString numbers[5] = {"0","1","2","3","4"};
+  TString names[5] = {"ee","mm","tt","qq","data"};
+  
+  Float_t		Ncharged;
+  Float_t		Pcharged;
+  Float_t   E_ecal;
+  Float_t   E_hcal;
+  Float_t   E_lep;
+  Float_t   cos_thet;
+  
+  TBranch*	b_Ncharged;
+  TBranch*	b_Pcharged;
+  TBranch*	b_E_ecal;
+  TBranch*	b_E_hcal;
+  TBranch*	b_E_lep;
+  TBranch*	b_cos_thet;
+  
+  unsigned int ilist[2]={1,4};
+  
+  for(unsigned int j=0; j<2; j++){
+  	unsigned int i=ilist[j];
+  	if(i==4)h[i] = (TTree*)files[i]->Get("h33");
+  	else h[i] = (TTree*)files[i]->Get("h3");
+    h[i]->SetTitle("N vs P");
+    h[i]->SetLineColor(colors[i]);
+    b_Ncharged  = h[i]->GetBranch("Ncharged");
+    b_Ncharged->SetAddress(&Ncharged);
+    b_Pcharged  = h[i]->GetBranch("Pcharged");
+    b_Pcharged->SetAddress(&Pcharged);
+    b_E_ecal  = h[i]->GetBranch("E_ecal");
+    b_E_ecal->SetAddress(&E_ecal);
+    b_E_hcal  = h[i]->GetBranch("E_hcal");
+    b_E_hcal->SetAddress(&E_hcal);
+    b_E_lep  = h[i]->GetBranch("E_lep");
+    b_E_lep->SetAddress(&E_lep);
+    b_cos_thet  = h[i]->GetBranch("cos_thet");
+    b_cos_thet->SetAddress(&cos_thet);
+    
+    TString title2="h_Ncharged_vs_Pcharged"; title2+=i;
+    h_Ncharged_vs_Pcharged[i]=new TH2F(title2,title2,40,00,120,20,0,120);		
+		int nevents = h[i]->GetEntries();
+
+    //nevents=20;
+    for(int ievent=0; ievent<nevents; ievent=ievent+1){
+      if(ievent % 1000==0) cout << "Event " << ievent << endl;
+      h[i]->GetEvent(ievent);
+      
+      //Fill the histograms here
+      
+			//if((((Ncharged<5 && E_ecal>=74)||(Pcharged==0 && E_ecal>80))&&cos_thet<0.4))//&&Pcharged>15))
+      //if(Ncharged>7)
+      //if(Ncharged<5 && E_ecal<74 && Pcharged<75 && Pcharged>15)
+      if(Ncharged<5 && E_ecal<50 && (Pcharged>=75||Pcharged<1))
+      	h_Ncharged_vs_Pcharged[i]->Fill(E_ecal, Pcharged);
+    }
+    
+    h_Ncharged_vs_Pcharged[i]->Scale(1./(h_Ncharged_vs_Pcharged[i]->GetEntries()));
+    new TCanvas(TString("c")+i,names[i],600,400);
+    h_Ncharged_vs_Pcharged[i]->Draw("box");
+
+		//C1->cd();    
+    //if(i==0)sumWithoutCut[i]=r*h[i]->Draw(TString(argument)+TString(">>var_wo_")+names[i]+TString(bounds),"");
+    //else sumWithoutCut[i]=h[i]->Draw(TString(argument)+TString(">>var_wo_")+names[i],"","same");    
+		//C2->cd();
+    //if(i==0)sumWithCut[i]=h[i]->Draw(TString(argument)+TString(">>var_w_")+names[i]+TString(bounds),cuts);
+    //else sumWithCut[i]=h[i]->Draw(TString(argument)+TString(">>var_w_")+names[i],cuts,"same");
+    //eff[i]=sumWithCut[i]/sumWithoutCut[i];
+  }
+  
+  for(unsigned int i=0; i<4; i++){
+    //cout << (TString("eff_")+names[i]+TString(" = ")) << eff[i] << endl;
+    //sum1=0;
+    //sum2=0;
+    for(unsigned int j=0; j<4;j++){
+    //	sum1+=sumWithCut[j]*Br[j];
+    	if(i!=j){
+    //		sum2+=sumWithCut[j]*Br[j];
+    	}
+    }
+    //pur[i]=1-sum2/sum1;
+    //cout << (TString("pur_")+names[i]+TString(" = ")) << pur[i] << endl;
+  }
+
+  //TString titles[5]={"ee","mm","tt","qq","data"}
+  //TLegend *leg = new TLegend(0.7,0.7,0.9,0.9);
+  //leg->SetHeader("Legend"); 
+  //leg->SetFillColor(0);
+  //for(unsigned int i=0; i<4; i++) leg->AddEntry(h[i],titles[i],"l");
+	//C1->cd();
+  //leg->Draw("same");
+  //C1->Print(TString(argument)+TString(name)+TString(".png"),"png");
+	//C2->cd();
+  //leg->Draw("same");
+  //C2->Print(TString(argument)+TString(name)+TString("_cut.png"),"png");
+
+}

@@ -1,0 +1,23 @@
+qq:
+
+Ncharged>7
+eff: 0.989702
+pur: 0.999729
+
+ee:
+
+((Ncharged<5 && E_ecal>=74)||(Pcharged==0 && E_ecal>80))&&cos_thet<0.4&&Pcharged>15
+eff: 0.525405		*	0.631714	=	0.331906
+pur: 0.993914			0.921823
+
+mm:
+
+Ncharged<5 && E_ecal<50 && (Pcharged>=75||Pcharged<1)
+eff: 0.956495
+pur: 0.989179
+
+tt:
+
+Ncharged<5 && E_ecal<74 && Pcharged<75 && Pcharged>0
+eff: 0.900649
+pur: 0.926907
