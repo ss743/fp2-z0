@@ -26,7 +26,24 @@ Um später die Separation der Zerfallskanäle durchführen zu können, werden zu
 
 Jeder Zerfall lässt sich durch bestimmte Parameter charakterisieren. Dies sind die Anzahl $N_\text{charged}$ der geladenen Spuren im Spurdetektor, $P_\text{charged}$ der Impuls der geladenen Teilchen im Spurdetektor, $E_\text{ecal}$ die an das elektromagnetische Kalorimeter abgegebene Energie, $E_\text{hcal}$ die an das hadronische Kalorimeter abgegebene Energie und $\cos\theta$ der Winkel zwischen einlaufenden und auslaufenden Teilchen. Mit Hilfe der Monte-Carlo-Simulation (siehe Abschnitt \ref{sec:montecarlo}) lassen sich diese Parameter für die einzelnen Zerfallskanäle separat simulieren. Die einzelnen Parameter sind in Abbildung \ref{fig:mc} aufgetragen.\\
 
-Aus diesen Daten lassen sich nun Schnitte festlegen, nach denen die einzelnen Zerfallskanäle aus den experimentell erhaltenen Daten separiert werden können. Zum Festlegen der Schnitte wurde das Skript \code{makeCuts.C} im Anhang \ref{sec:root} entwickelt. Die hierbei vorläufig festgelegten Schnitte sind in Tabelle \ref{tab:cuts} zu finden.\\
+Aus diesen Daten lassen sich nun Schnitte festlegen, nach denen die einzelnen Zerfallskanäle aus den experimentell erhaltenen Daten separiert werden können. Zum Festlegen der Schnitte wurde das Skript \code{makeCuts.C} im Anhang \ref{sec:root} entwickelt. Die hierbei vorläufig festgelegten Schnitte sind in Tabelle \ref{tab:cuts} zu finden.
+
+\paragraph{Effizienz und Reinheit}
+Um die Güte eines festgelegten Schnittes zu bestimmen, lassen sich zwei Größen berechnen: Dies sind die Effizienz $\mathcal{E}_f^i$ und die Reinheit $p_f^i$ des Schnittes $i$ für den Zerfallskanal $f$. Diese Größen sind wie folgt definiert:
+\begin{align}
+	\mathcal{E}_f^i&=\frac{N_f^i}{N_i}\\
+	p_f^i&=1-\frac{\sum\limits_{j\neq f}N_j^i\cdot \mathrm{BR}_j}{\sum\limits_{j}N_j^i\cdot \mathrm{BR}_j}\text{.}
+\end{align}
+
+Die Effizienz beschreibt dabei den Anteil der Fermionen $f$, welche sich innerhalb des Cuts befinden, an der Gesamtanzahl der Fermionen $f$, während die Reinheit den Anteil der Fermionen $f$, welche sich innerhalb des Cuts befinden, an der Gesamtanzahl aller Teilchen, welche sich innerhalb des Cuts befinden, beschreibt.\\
+
+Offensichtlich sind die theoretisch optimale Effizienz und Reinheit gegeben durch:
+\begin{align}
+	\mathcal{E}_f^i&=\delta_{if}\\
+	p_f^i&=\delta_{if}
+\end{align}
+
+Die theoretisch optimalen Werte können natürlich im Experiment nicht erreicht werden. Ziel bei der Festlegung der Schnitte ist es jedoch, für beide Größen möglichst hohe Werte zu erzielen.
 
 \begin{table}
 	\centering
@@ -197,13 +214,14 @@ Für die leptonische Zerfallsbreite werden die Ergebnisse aus dem gewichteten le
 	&\Gamma_q&&=&(1788\pm18)\,\si{MeV}\text{.}
 \end{alignat}
 
-Für die Verzweigungsverhältnisse $\mathrm{BR}_l$ und $\mathrm{BR}_q$ mit
+Für die Verzweigungsverhältnisse $\mathrm{BR}_f$ mit
 \begin{align}
 	\mathrm{BR}_f&=\frac{\Gamma_f}{\Gamma_Z}
 \end{align}
 erhalten wir folgende Ergebnisse:
 \begin{alignat}{3}
-	&\mathrm{BR}_l&&=&\,(9,74\pm0,10)\,\%\text{,}\\
+	&\mathrm{BR}_l&&=&(9,7\pm1,0)\,\%\text{,}\\
+	&\mathrm{BR}_\nu&&=&\,(19,7\pm0,9)\,\%\text{,}\\
 	&\mathrm{BR}_q&&=&(70,6\pm0,8)\,\%\text{.}
 \end{alignat}
 
