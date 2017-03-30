@@ -51,3 +51,7 @@ ssigmaE=sigmaE*sqrt((2*sMz/Mz)^2+(2*sgammaF[1]/gammaF[1])^2+(2*sgammaTot/gammaTo
 #Aenderung bei weiterem leichten Fermionenpaar
 p=(gammaF[1]+gammaF[2])/gammaTot
 sp=p*sqrt((sgammaTot/gammaTot)^2+(sgammaF[1]^2+sgammaF[2]^2/(gammaF[1]+gammaF[2])^2))
+
+BRl=divide(c(gammaLep1,sgammaLep1),c(gammaTot,sgammaTot))
+BRn=divide(c(gammaLep2,sgammaLep2),c(gammaTot,sgammaTot))
+BRq=divide(c(gammaHad,sgammaHad),c(gammaTot,sgammaTot))
