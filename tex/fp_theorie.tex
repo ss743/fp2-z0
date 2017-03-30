@@ -225,11 +225,11 @@ Bei der inelastischen Streuung werden zwei virtuelle Photonen ausgesendet, welch
 
 Die Prozesse, welche die Erzeugung eines $Z^0$-Bosons beinhalten sind jeweils nur im Bereich um die Masse des $Z^0$-Bosons möglich. Durch Untersuchung dieser Prozesse bei unterschiedlichen Schwerpunktsenergien rund um die erwartete Masse des $Z^0$-Bosons lässt sich nun die genaue Masse sowie die Zerfallsbreite des $Z^0$-Bosons bestimmen. Erwartet wird ein Resonanzmaximum des Wirkungsquerschnitts bei der Masse $M_Z$ des $Z^0$-Bosons.
 
-\subsubsection{Bhabha-Streuung}
+\subsubsection{Bhabha-Streuung}\label{sec:bhabha}
 
 Wie bereits in Abschnitt \ref{sec:e+e-} beschrieben, tragen zwei Feynman-Graphen zur Bhabha-Streuung bei (siehe Abbildung \ref{fig:feynmanbhabha}). Der s-Kanal beschreibt den Beitrag des Vernichtungsprozesses, während der t-Kanal Streuprozesse beschreibt. Für die Messung der Zerfallsbreite des $Z^0$-Bosons ist also nur der s-Kanal relevant. Unterscheiden lassen sich die unterschiedlichen Prozesse am Streuwinkel $\theta$ zwischen dem einlaufenden und dem auslaufenden Elektron. Für große Winkel dominiert der s-Kanal, für kleine Winkel der t-Kanal. Die Winkelabhängigkeit des Wirkungsquerschnitts wird durch folgende Formel beschrieben:
 \begin{align}
-	\del[\sigma]{\Omega}&=s\cdot\left(1+\cos^2\theta\right)+t\cdot\left(1-\cos\theta\right)^{-2}\text{.}
+	\del[\sigma]{\Omega}&=s\cdot\left(1+\cos^2\theta\right)+t\cdot\left(1-\cos\theta\right)^{-2}\text{.}\label{eq:stkanal}
 \end{align}
 
 \begin{figure}
@@ -268,7 +268,7 @@ Die Paarvernichtung mit anschließendem Zerfall in ein $f\bar f$-Paar ist durch 
 \end{align}
 Hierbei beschreibt $\Gamma_e$ die Zerfallsbreite des Elektrons, $\Gamma_f$ die Zerfallsbreite des Fermions und $\Gamma_Z$ die Gesamtbreite.
 
-\subsubsection{Berechnung der Zerfallsbreiten}
+\subsubsection{Berechnung der Zerfallsbreiten}\label{sec:partialbreiten}
 
 Die Partialbreiten der Zerfallskanäle berechnen sich nach \cite{anleitungalt} folgendermaßen:
 
@@ -303,19 +303,19 @@ mit \cite{anleitungalt,nakamura}:
 \footnotetext{Der Zerfall in $\tau\bar\tau$ ist aufgrund der hohen Masse des Top-Quarks nicht möglich.}
 
 Aus Gleichung \ref{eq:partialbreiten} ergeben sich folgende Ergebnisse:
-\begin{align}
-	\Gamma_{e/\mu/\tau}&=(83,412\pm0,009)\,\si{MeV}\text{,}\\
-	\Gamma_{\nu_e/\nu_\mu/\nu_\tau}&=(165,884\pm0,011)\,\si{MeV}\text{,}\\
-	\Gamma_{d/s/b}&=(367,91\pm0,06)\,\si{MeV}\text{,}\\
-	\Gamma_{u/c}&=(285,43\pm0,07)\,\si{MeV}\text{.}
-\end{align}
+\begin{alignat}{3}
+	&\Gamma_{e/\mu/\tau}&&=&(83,412\pm0,009)\,\si{MeV}\text{,}\label{eq:leptonenuniversalitaet}\\
+	&\Gamma_{\nu_e/\nu_\mu/\nu_\tau}&&=&\,(165,884\pm0,011)\,\si{MeV}\text{,}\label{eq:neutrinos}\\
+	&\Gamma_{d/s/b}&&=&(367,91\pm0,06)\,\si{MeV}\text{,}\\
+	&\Gamma_{u/c}&&=&(285,43\pm0,07)\,\si{MeV}\text{.}
+\end{alignat}
 Daraus lassen sich nun die gesamte Zerfallsbreite $\Gamma_Z$, die hadronische Zerfallsbreite $\Gamma_q$, die geladene leptonische Zerfallsbreite $\Gamma_l$ und die Neutrino-Zerfallsbreite $\Gamma_\nu$ zu folgenden Werten bestimmen:
-\begin{align}
-	\Gamma_Z&=(2422,5\pm0,2)\,\si{MeV}\text{,}\\
-	\Gamma_q&=(1674,59\pm0,19)\,\si{MeV}\text{,}\\
-	\Gamma_l&=(250,24\pm0,03)\,\si{MeV}\text{,}\\
-	\Gamma_\nu&=(497,65\pm0,03)\,\si{MeV}\text{.}
-\end{align}
+\begin{alignat}{3}
+	&\Gamma_Z&&=&(2422,5\pm0,2)\,\si{MeV}\text{,}\\
+	&\Gamma_q&&=&\,(1674,59\pm0,19)\,\si{MeV}\text{,}\\
+	&\Gamma_l&&=&(250,24\pm0,03)\,\si{MeV}\text{,}\\
+	&\Gamma_\nu&&=&(497,65\pm0,03)\,\si{MeV}\text{.}
+\end{alignat}
 
 Der Wirkungsquerschnitt $\sigma_f$ zur Erzeugung eines $f\bar{f}$-Paars bei der Schwerpunktenergie $\sqrt{s}$ ist gegeben durch:
 \begin{align}
@@ -357,31 +357,31 @@ und ergibt sich am Resonanzmaximum ($\sqrt{s}=M_z$) zu
 \end{figure}
 
 Der Verlauf der Wirkungsquerschnitte für Leptonen, Neutrinos und Quarks ist in Abbildung \ref{fig:partialbreiten} dargestellt. Wir erhalten folgende partielle Wirkungsquerschnitte am Resonanzmaximum:
-\begin{align}
-	\sigma_q^\text{Peak}&=(42,022\pm0,010)\,\si{nb}\text{,}\\
-	\sigma_l^\text{Peak}&=(6,2794\pm0,0013)\,\si{nb}\text{,}\\
-	\sigma_{e/\mu/\tau}^\text{Peak}&=(2,0931\pm0,0006)\,\si{nb}\text{,}\\
-	\sigma_\nu^\text{Peak}&=(12,488\pm0,003)\,\si{nb}\text{,}
-\end{align}
+\begin{alignat}{3}
+	&\sigma_q^\text{Peak}&&=&(42,022\pm0,010)\,\si{nb}\text{,}\\
+	&\sigma_l^\text{Peak}&&=&\,(6,2794\pm0,0013)\,\si{nb}\text{,}\\
+	&\sigma_{e/\mu/\tau}^\text{Peak}&&=&(2,0931\pm0,0006)\,\si{nb}\text{,}\\
+	&\sigma_\nu^\text{Peak}&&=&(12,488\pm0,003)\,\si{nb}\text{,}
+\end{alignat}
 wobei $\sigma_{e/\mu/\tau}$ der Wirkungsquerschnitt eines einzelnen Leptons ist, während $\sigma_{l}$ der Wirkungsquerschnitt für alle geladenen Leptonen ist, so wie $\sigma_\nu$ der Wirkungsquerschnitt für alle Neutrinos ist.
 
 \paragraph{Weitere Leptonengeneration} Falls der Zerfall des $Z^0$-Bosons in ein weiteres Lepton $x$ möglich ist, sind zwei zusätzliche Zerfallskanäle zu betrachten: $Z^0\rightarrow x\bar x$ und $Z^0\rightarrow \nu_x\bar{\nu}_x$. Nach Gleichung \ref{eq:partialbreiten} gilt dann:
-\begin{align}
-	\Gamma_x&=\Gamma_{e/\mu/\tau}=(83,412\pm0,009)\,\si{MeV}\text{,}\\
-	\Gamma_{\nu_x}&=\Gamma_{\nu_e/\nu_\mu/\nu_\tau}=(165,884\pm0,011)\,\si{MeV}\text{.}
-\end{align}
+\begin{alignat}{6}
+	&\Gamma_x&&=\Gamma_{e/\mu/\tau}&&=&\,(83,412\pm\,0,009)\,\si{MeV}\text{,}\\
+	&\Gamma_{\nu_x}&&=\Gamma_{\nu_e/\nu_\mu/\nu_\tau}&&=&\,(165,884\pm\,0,011)\,\si{MeV}\text{.}
+\end{alignat}
 Die relative Änderung der Zerfallsbreite beträgt also:
 \begin{align}
 	p&=\frac{\Delta\Gamma_Z}{\Gamma_Z}=\frac{\Gamma_x+\Gamma_{\nu_x}}{\Gamma_Z}=(10,2910\pm0,0010)\,\%\text{.}
 \end{align}
 
-\subsection{Vorwärts-Rückwärts-Asymmetrie}
+\subsection{Vorwärts-Rückwärts-Asymmetrie}\label{sec:asymm}
 Die Vorwärts-Rückwärts-Asymmetrie beschreibt den Unterschied der Wirkungsquerschnitte für Winkel $\theta>0$ und Winkel $\theta<0$. Sie ist definiert durch \cite{anleitungalt}:
 \begin{align}
 	A_{FB}&=\frac{\int\limits_0^1\del[\sigma]{\cos\theta}\mathrm d\cos\theta
 		-\int\limits_{-1}^0\del[\sigma]{\cos\theta}\mathrm d\cos\theta}
 	{\int\limits_0^1\del[\sigma]{\cos\theta}\mathrm d\cos\theta
-		+\int\limits_{-1}^0\del[\sigma]{\cos\theta}\mathrm d\cos\theta}\text{.}
+		+\int\limits_{-1}^0\del[\sigma]{\cos\theta}\mathrm d\cos\theta}\text{.}\label{eq:asymm}
 \end{align}
 
 Nach der Born'schen Näherung gilt für den differentiellen Wirkungsquerschnitt der Reaktion $e^+e^-\rightarrow f\bar f$ \cite{anleitungalt}:
@@ -394,7 +394,7 @@ Daraus ergibt sich für die Asymmetrie:
 \end{align}
 Am Resonanzmaximum ergibt sich das zu \cite{anleitungalt}:
 \begin{align}
-	A_{FB}^{\mathrm{Peak}}&=3\left(1-4\sin^2\theta_W\right)^2\text{,}
+	A_{FB}^{\mathrm{Peak}}&=3\left(1-4\sin^2\theta_W\right)^2\text{,}\label{eq:weinberg}
 \end{align}
 mit dem Weinbergwinkel $\theta_W$, welcher sich somit aus der Vorwärts-Rückwärts-Asymmetrie berechnen lässt.
 
@@ -405,5 +405,6 @@ mit dem Weinbergwinkel $\theta_W$, welcher sich somit aus der Vorwärts-Rückwä
 %Saskia
 
 \subsection{Monte-Carlo-Simulation}
+\label{sec:montecarlo}
 %Saskia
 
