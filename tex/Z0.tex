@@ -107,11 +107,14 @@
 \newcommand{\del}[2][]{\frac{\partial #1}{\partial #2}}
 \newcommand{\diff}[2][]{\frac{\mathrm d #1}{\mathrm d #2}}
 \newcommand{\code}[1]{\texttt{#1}}
+\newcommand{\degree}{^\circ}
 
 \newcommand{\vcenterbf}[3][white]{\textcolor{#1}{$P_q$}\textcolor{#2}{\textbf{#3}}\textcolor{#1}{$P_q$}}
 \newcommand{\vcenternode}[3][white]{\textcolor{#1}{$P_q$}\textcolor{#2}{#3}\textcolor{#1}{$P_q$}}
 
 \addbibresource{fp_refs.bib}
+
+\renewcommand*{\thesubfigure}{ \alph{subfigure})}
 
 %Titel,Inhalt----------------------------------------------------------------------------------------------------------
 
@@ -143,6 +146,8 @@
 	\newpage
 	\include{fp_diskussion}
 	\newpage
+	\setcounter{section}{0}
+	\renewcommand*{\thesection}{\Alph{section}}
 	\include{fp_anhang}
 	\newpage
 	\listoffigures
