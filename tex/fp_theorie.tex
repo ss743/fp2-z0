@@ -421,59 +421,145 @@ mit dem Weinbergwinkel $\theta_W$, welcher sich somit aus der Vorwärts-Rückwä
 Bei hohen Schwerpunktsenergien, wie sie in diesem Versuch vorkommen, kann die Born'sche Näherung nicht mehr ausreichend alle Effekte erklären. Deshalb müssen bei der Berechnung der Wirkungsquerschnitte Strahlungskorrekturen berücksichtigt werden. Zu berücksichtigen sind hier QED\footnote{\textbf Quanten\textbf Elektro\textbf Dynamik}-Korrekturen durch die elektroschwache Wechselwirkung, QCD\footnote{\textbf Quanten\textbf Chromo\textbf Dynamik}-Korrekturen durch die starke Wechselwirkung, sowie Korrekturen durch virtuelle Prozesse. Die Effekte, die zu diesen Korrekturen führen, sind im folgenden beschrieben und beispielhaft in Abbildung \ref{fig:korrekturen} dargestellt.
 
 \paragraph{QED-Korrekturen}
-QED-Korrekturen entstehen durch Bremsstrahlungseffekte, also ausgestrahlte Photonen aus dem Anfangs- oder Endzustand.
+QED-Korrekturen entstehen durch Bremsstrahlungseffekte, also ausgestrahlte Photonen aus dem Anfangs- oder Endzustand. Die QED-Korrekturen sind in Abbildung \ref{sub:qed} zu sehen.
 
 \paragraph{QCD-Korrekturen}
-QCD-Korrekturen sind vergleichbar zu den QED-Korrekturen, der zugrunde liegende Effekt ist hier die Abstrahlung eines Gluons. Da Leptonen keine Gluonen abstrahlen können, kann dieser Effekt nur im Endzustand auftreten. Es können auch zwei Gluonen aus dem Endzustand abgestrahlt werden.
+QCD-Korrekturen sind vergleichbar zu den QED-Korrekturen, der zugrunde liegende Effekt ist hier die Abstrahlung eines Gluons. Da Leptonen keine Gluonen abstrahlen können, kann dieser Effekt nur im Endzustand auftreten. Es können auch zwei Gluonen aus dem Endzustand abgestrahlt werden. Abbildung \ref{sub:qcd} zeigt diese Effekte.
 
 \paragraph{Virtuelle Korrekturen}
-Virtuelle Korrekturen entstehen durch Prozesse, die den gleichen Anfangs- und Endzustand besitzen, wie der zugrundeliegende Prozess der Born'schen Näherung. Dies sind beispielsweise die Erzeugung und sofortige Vernichtung eines Fermionenpaars oder der Austausch eines Photons oder Z\textsuperscript0-Bosons zwischen zwei Start- oder Endteilchen.
+Virtuelle Korrekturen entstehen durch Prozesse, die den gleichen Anfangs- und Endzustand besitzen, wie der zugrundeliegende Prozess der Born'schen Näherung. Dies sind beispielsweise die Erzeugung und sofortige Vernichtung eines Fermionenpaars oder der Austausch eines Photons oder Z\textsuperscript0-Bosons zwischen zwei Start- oder Endteilchen. Die virtuellen Effekte sind in Abbildung \ref{sub:virtuell} dargestellt.
 
-%\begin{figure}
-%	\centering
-%	\subfigure[QED]{
-%			\begin{tikzpicture}
-%			\begin{feynman}
-%			\vertex (em) {$e^-$};
-%			\vertex [below right=of em](a);
-%			\vertex [right=of a](b);
-%			\vertex [below left=of a](c);
-%			\vertex [below left=of c](ep){$e^+$};
-%			\vertex [above right=of b](f1){$\bar f$};
-%			\vertex [below right=of b](f2){$f$};
-%			\vertex [below right=of c](g1){$\gamma$};
-%			
-%			\diagram{
-%				(em)--[fermion](a)--(c)--[fermion](ep),
-%				(c)--[photon](g1),
-%				(a)--[boson,edge label={$\gamma, Z^0$}](b),
-%				(f1)--[fermion](b)--[fermion](f2),
-%			};
-%			\end{feynman}
-%			\end{tikzpicture}
-%			\begin{tikzpicture}
-%			\begin{feynman}
-%			\vertex (em) {$e^-$};
-%			\vertex [below right=of em](a);
-%			\vertex [right=of a](b);
-%			\vertex [below left=of a](ep){$e^+$};
-%			\vertex [above right=of b](f1){$\bar f$};
-%			\vertex [below right=of b](f2){$f$};
-%			
-%			\diagram{
-%				(em)--[fermion](a)--[fermion](ep),
-%				(a)--[boson,edge label={$\gamma, Z^0$}](b),
-%				(f1)--[fermion](b)--[fermion](f2),
-%			};
-%			\end{feynman}
-%			\end{tikzpicture}
-%		}
-%	\subfigure[QCD]{
-%		}
-%	\subfigure[virtuell]{
-%		}
-%	\caption{Strahlungskorrekturen durch \subref{sub:qed} QED, \subref{sub:qcd} QCD und \subref{sub:virtuell} virtuelle Prozesse}
-%\end{figure}
+\begin{figure}
+	\centering
+	\subfigure[QED]{
+			\begin{tikzpicture}
+			\begin{feynman}
+			\vertex (em) {$e^-$};
+			\vertex [below right=of em](a);
+			\vertex [right=of a](b);
+			\vertex [below left=of a](c);
+			\vertex [below left=of c](ep){$e^+$};
+			\vertex [above right=of b](f1){$\bar f$};
+			\vertex [below right=of b](f2){$f$};
+			\vertex [below right=of c](g1){$\gamma$};
+			
+			\diagram{
+				(em)--[fermion](a)--(c)--[fermion](ep),
+				(c)--[photon](g1),
+				(a)--[boson,edge label={$\gamma, Z^0$}](b),
+				(f1)--[fermion](b)--[fermion](f2),
+			};
+			\end{feynman}
+			\end{tikzpicture}
+			\begin{tikzpicture}
+			\begin{feynman}
+			\vertex (em) {$e^-$};
+			\vertex [below right=of em](a);
+			\vertex [right=of a](b);
+			\vertex [below left=of a](ep){$e^+$};
+			\vertex [above right=of b](f1){$\bar f$};
+			\vertex [below right=of b](c);
+			\vertex [below right=of c](f2){$f$};
+			\vertex [above right=of c](g1){$\gamma$};
+			
+			\diagram{
+				(em)--[fermion](a)--[fermion](ep),
+				(a)--[boson,edge label={$\gamma, Z^0$}](b),
+				(f1)--[fermion](b)--(c)--[fermion](f2),
+				(c)--[photon](g1),
+			};
+			\end{feynman}
+			\end{tikzpicture}
+			\label{sub:qed}
+		}
+	\subfigure[QCD]{
+			\begin{tikzpicture}
+			\begin{feynman}
+			\vertex (em) {$e^-$};
+			\vertex [below right=of em](a);
+			\vertex [right=of a](b);
+			\vertex [below left=of a](ep){$e^+$};
+			\vertex [above right=of b](d);
+			\vertex [above right=of d](f1){$\bar q$};
+			\vertex [below right=of b](c);
+			\vertex [below right=of c](f2){$q$};
+			\vertex [right=of c](g1){$g$};
+			\vertex [right=of d](g2){$g$};
+			
+			\diagram{
+				(em)--[fermion](a)--[fermion](ep),
+				(a)--[boson,edge label={$\gamma, Z^0$}](b),
+				(f1)--[fermion](b)--(c)--[fermion](f2),
+				(c)--[gluon](g1),
+				(d)--[gluon](g2),
+			};
+			\end{feynman}
+			\end{tikzpicture}
+			\begin{tikzpicture}
+			\begin{feynman}
+			\vertex (em) {$e^-$};
+			\vertex [below right=of em](a);
+			\vertex [right=of a](b);
+			\vertex [below left=of a](ep){$e^+$};
+			\vertex [above right=of b](f1){$\bar q$};
+			\vertex [below right=of b](c);
+			\vertex [below right=of c](f2){$q$};
+			\vertex [above right=of c](g1){$g$};
+			
+			\diagram{
+				(em)--[fermion](a)--[fermion](ep),
+				(a)--[boson,edge label={$\gamma, Z^0$}](b),
+				(f1)--[fermion](d)--(b)--(c)--[fermion](f2),
+				(c)--[gluon](g1),
+			};
+			\end{feynman}
+			\end{tikzpicture}
+			\label{sub:qcd}
+		}
+		\subfigure[virtuell]{
+			\begin{tikzpicture}
+			\begin{feynman}
+			\vertex (em) {$e^-$};
+			\vertex [below right=of em](a);
+			\vertex [right=of a](x);
+			\vertex [right=of x](y);
+			\vertex [right=of y](b);
+			\vertex [below left=of a](ep){$e^+$};
+			\vertex [above right=of b](f1){$\bar f$};
+			\vertex [below right=of b](f2){$f$};
+			
+			\diagram{
+				(em)--[fermion](a)--[fermion](ep),
+				(a)--[boson,edge label={$\gamma, Z^0$}](x)--[fermion,half left, edge label={$f$}](y)--[fermion,half left, edge label={$\bar f$}](x),
+				(y)--[boson,edge label={$\gamma, Z^0$}](b),
+				(f1)--[fermion](b)--[fermion](f2),
+			};
+			\end{feynman}
+			\end{tikzpicture}
+			\begin{tikzpicture}
+			\begin{feynman}
+			\vertex (em) {$e^-$};
+			\vertex [below right=of em](a);
+			\vertex [right=of a](b);
+			\vertex [below left=of a](ep){$e^+$};
+			\vertex [above right=of b](d);
+			\vertex [above right=of d](f1){$\bar f$};
+			\vertex [below right=of b](c);
+			\vertex [below right=of c](f2){$f$};
+			
+			\diagram{
+				(em)--[fermion](a)--[fermion](ep),
+				(a)--[boson,edge label={$\gamma, Z^0$}](b),
+				(f1)--[fermion](b)--(c)--[fermion](f2),
+				(c)--[boson,edge label'={$\gamma, Z^0$}](d),
+			};
+			\end{feynman}
+			\end{tikzpicture}
+			\label{sub:virtuell}
+		}
+	\caption{Beispielhafte Strahlungskorrekturen durch\subref{sub:qed} QED,\subref{sub:qcd} QCD und\subref{sub:virtuell} virtuelle Prozesse}
+	\label{fig:korrekturen}
+\end{figure}
 
 \subsection{Teilchendetektoren}
 %Saskia
