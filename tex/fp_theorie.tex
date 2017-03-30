@@ -125,7 +125,7 @@ In diesem Versuch werden Daten von Elektron-Positron-Kollisionen ausgewertet. Be
 \paragraph{Paarvernichtung und Erzeugung von Photonen}
 Bei der Kollision von Elektron und Positron können diese sich annihilieren und dabei in zwei oder drei reelle Photonen zerfallen. Die Energie der Teilchen wird dabei vollständig an die Photonen übertragen. Dieser Prozess ist in Abbildung \ref{fig:feynmanphotonen} dargestellt. Bei diesem Prozess ist kein $Z^0$-Boson beteiligt, weshalb der Prozess in der Auswertung eliminiert werden muss.
 
-\begin{figure}
+\begin{figure}[b]
 	\centering
 	\begin{tikzpicture}
 		\begin{feynman}
@@ -295,31 +295,31 @@ Die Partialbreiten der Zerfallskanäle berechnen sich nach \cite{anleitungalt} f
 	\Gamma_f&=\frac{N_c^f\sqrt2}{12\pi}\cdot G_FM_Z^3\left(\left(g_v^f\right)^2+\left(g_A^f\right)^2\right)\label{eq:partialbreiten}
 \end{align}
 mit \cite{anleitungalt,nakamura}:
-\begin{align}
-	N_c^f&=
+\begin{alignat}{2}
+	&N_c^f&&=
 	\begin{cases}
 		1&\text{für } f\in\{e, \mu, \tau, \nu_e, \nu_\mu, \nu_\tau\}\\
 		3&\text{für } f\in\{u, d, c, s, b\}
 	\end{cases}\text{,}\\
-	G_F&=(1,66370\pm0,00010)\cdot10^{-5}\,\si{GeV^{-2}}\text{,}\\
-	M_Z&=(91,188\pm0,002)\,\si{GeV}\text{,}\\
-	g_v^f&=I_3^f-2Q_f\sin^2\left(\theta_W\right)\text{,}\\
-	g_A^f&=I_3^f\text{,}\\
-	I_3^f&=
+	&G_F&&=(1,66370\pm0,00010)\cdot10^{-5}\,\si{GeV^{-2}}\text{,}\\
+	&M_Z&&=(91,188\pm0,002)\,\si{GeV}\text{,}\\
+	&g_v^f&&=I_3^f-2Q_f\sin^2\theta_W\text{,}\\
+	&g_A^f&&=I_3^f\text{,}\\
+	&I_3^f&&=
 	\begin{cases}
 		-\frac12&\text{für } f\in\{e, \mu, \tau, d, s, b\}\\
 		\frac12&\text{für } f\in\{\nu_e, \nu_\mu, \nu_\tau, u, c\}
 	\end{cases}\text{,}\\
-	Q_f&=
+	&Q_f&&=
 	\begin{cases}
 		-1&\text{für } f\in\{e, \mu, \tau\}\\
 		-\frac13&\text{für } f\in\{d, s, b\}\\
 		0&\text{für } f\in\{\nu_e, \nu_\mu, \nu_\tau\}\\
-		\frac23&\text{für } f\in\{u, c\}\footnotemark
+		\frac23&\text{für } f\in\{u, c\}
 	\end{cases}\text{,}\\
-	\sin^2\left(\theta_W\right)&=0,23116\pm0,00013\text{.}
-\end{align}
-\footnotetext{Der Zerfall in $\tau\bar\tau$ ist aufgrund der hohen Masse des Top-Quarks nicht möglich.}
+	&\sin^2\theta_W&&=0,23116\pm0,00013\text{.}
+\end{alignat}
+Der Zerfall in $\tau\bar\tau$ ist aufgrund der hohen Masse des Top-Quarks nicht möglich.\\
 
 Aus Gleichung \ref{eq:partialbreiten} ergeben sich folgende Ergebnisse:
 \begin{alignat}{3}
@@ -418,7 +418,62 @@ Am Resonanzmaximum ergibt sich das zu \cite{anleitungalt}:
 mit dem Weinbergwinkel $\theta_W$, welcher sich somit aus der Vorwärts-Rückwärts-Asymmetrie berechnen lässt.
 
 \subsection{Strahlungskorrekturen}
-%Simon
+Bei hohen Schwerpunktsenergien, wie sie in diesem Versuch vorkommen, kann die Born'sche Näherung nicht mehr ausreichend alle Effekte erklären. Deshalb müssen bei der Berechnung der Wirkungsquerschnitte Strahlungskorrekturen berücksichtigt werden. Zu berücksichtigen sind hier QED\footnote{\textbf Quanten\textbf Elektro\textbf Dynamik}-Korrekturen durch die elektroschwache Wechselwirkung, QCD\footnote{\textbf Quanten\textbf Chromo\textbf Dynamik}-Korrekturen durch die starke Wechselwirkung, sowie Korrekturen durch virtuelle Prozesse. Die Effekte, die zu diesen Korrekturen führen, sind im folgenden beschrieben und beispielhaft in Abbildung \ref{fig:korrekturen} dargestellt.
+
+\paragraph{QED-Korrekturen}
+QED-Korrekturen entstehen durch Bremsstrahlungseffekte, also ausgestrahlte Photonen aus dem Anfangs- oder Endzustand.
+
+\paragraph{QCD-Korrekturen}
+QCD-Korrekturen sind vergleichbar zu den QED-Korrekturen, der zugrunde liegende Effekt ist hier die Abstrahlung eines Gluons. Da Leptonen keine Gluonen abstrahlen können, kann dieser Effekt nur im Endzustand auftreten. Es können auch zwei Gluonen aus dem Endzustand abgestrahlt werden.
+
+\paragraph{Virtuelle Korrekturen}
+Virtuelle Korrekturen entstehen durch Prozesse, die den gleichen Anfangs- und Endzustand besitzen, wie der zugrundeliegende Prozess der Born'schen Näherung. Dies sind beispielsweise die Erzeugung und sofortige Vernichtung eines Fermionenpaars oder der Austausch eines Photons oder Z\textsuperscript0-Bosons zwischen zwei Start- oder Endteilchen.
+
+%\begin{figure}
+%	\centering
+%	\subfigure[QED]{
+%			\begin{tikzpicture}
+%			\begin{feynman}
+%			\vertex (em) {$e^-$};
+%			\vertex [below right=of em](a);
+%			\vertex [right=of a](b);
+%			\vertex [below left=of a](c);
+%			\vertex [below left=of c](ep){$e^+$};
+%			\vertex [above right=of b](f1){$\bar f$};
+%			\vertex [below right=of b](f2){$f$};
+%			\vertex [below right=of c](g1){$\gamma$};
+%			
+%			\diagram{
+%				(em)--[fermion](a)--(c)--[fermion](ep),
+%				(c)--[photon](g1),
+%				(a)--[boson,edge label={$\gamma, Z^0$}](b),
+%				(f1)--[fermion](b)--[fermion](f2),
+%			};
+%			\end{feynman}
+%			\end{tikzpicture}
+%			\begin{tikzpicture}
+%			\begin{feynman}
+%			\vertex (em) {$e^-$};
+%			\vertex [below right=of em](a);
+%			\vertex [right=of a](b);
+%			\vertex [below left=of a](ep){$e^+$};
+%			\vertex [above right=of b](f1){$\bar f$};
+%			\vertex [below right=of b](f2){$f$};
+%			
+%			\diagram{
+%				(em)--[fermion](a)--[fermion](ep),
+%				(a)--[boson,edge label={$\gamma, Z^0$}](b),
+%				(f1)--[fermion](b)--[fermion](f2),
+%			};
+%			\end{feynman}
+%			\end{tikzpicture}
+%		}
+%	\subfigure[QCD]{
+%		}
+%	\subfigure[virtuell]{
+%		}
+%	\caption{Strahlungskorrekturen durch \subref{sub:qed} QED, \subref{sub:qcd} QCD und \subref{sub:virtuell} virtuelle Prozesse}
+%\end{figure}
 
 \subsection{Teilchendetektoren}
 %Saskia
